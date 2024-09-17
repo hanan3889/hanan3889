@@ -90,5 +90,9 @@ class TaskController extends Controller
     public function destroy(string $id)
     {
         //
+        $task = Task::findOrFail($id);
+        $task->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Tâche supprimée avec succès.');
     }
 }
