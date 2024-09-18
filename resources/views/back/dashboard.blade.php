@@ -45,8 +45,6 @@
             </div>
         </div>
     </nav>
-
-    <!-- Main Content -->
     <div class="container my-3">
         <table class="table my-3">
             <thead>
@@ -72,7 +70,7 @@
                         @endif
                     </td>
                     <td>
-                        <div class="d-grid gap-2">
+                        <div>
                             <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-info">Modifier</a>
                             <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
                                 @csrf
