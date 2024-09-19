@@ -1,0 +1,15 @@
+Automatiser une BDD avec Laravel -11
+1) modifier le ficher .env et mettre le nom de la bdd
+2) se rendre sur phpmyadmin et crée une nouvelle BDD et renseigner le nom de la bdd eu .env
+3) faire php artisan make:command dbcreate 
+4) copier le fichier dbcreate.txt dans app -> Commands -> dbcreate.php
+5) lancer la commande php artisan db:create
+
+
+En cas d'erreur lors de la migration
+
+	1) Corriger la migration
+
+	2) Faire artisan db:create
+	
+	3) php artisan migrate
