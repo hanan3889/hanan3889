@@ -1,15 +1,50 @@
-Automatiser une BDD avec Laravel -11
-1) modifier le ficher .env et mettre le nom de la bdd
-2) se rendre sur phpmyadmin et crée une nouvelle BDD et renseigner le nom de la bdd eu .env
-3) faire php artisan make:command dbcreate 
-4) copier le fichier dbcreate.txt dans app -> Commands -> dbcreate.php
-5) lancer la commande php artisan db:create
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 
-En cas d'erreur lors de la migration
+class dbcreate extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'db:create {name?}';
 
-	1) Corriger la migration
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Create a new MysQL database based on config file or the provided parameter';
 
-	2) Faire artisan db:create
-	
-	3) php artisan migrate
+    /**
+     * Execute the console command.
+     */
+    public function handle()
+    {
+        //Create DB
+        $schemaName = $this->argument('name') ?:config('database.connections.mysql.database');
+        $charset = config('database.connections.mysql.charset', 'utf8mb4');
+        $collation = config('database.connections.mysql.collation', 'utf8mb4_general_ci');
+
+        //Création de la requête
+        config(['database.connections.mysql.database' => null]);
+
+        //On drop d'abord
+        $query = "DROP DATABASE $schemaName";
+        DB::statement($query);
+
+        //Puis on la recrée
+        $query = "CREATE DATABASE IF NOT EXISTS $schemaName CHARACTER SET $charset COLLATE $collation";
+        DB::statement($query);
+
+        echo "Database $schemaName created successfully";
+
+        config(['database.connections.mysql.database' => $schemaName]);
+    }
+}
