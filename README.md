@@ -40,4 +40,10 @@ Se rendre sur phpmyadmin et créer sa base de données avec le même nom enregis
 
 `php artisan serve`
 
+### Création d'une commande pour la création d'une base de données
+
+`php artisan make:command dbcreate`
+
+puis copie le fichier script-automatisation-db-laravel.txt
+
 
